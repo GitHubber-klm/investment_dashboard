@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Sijoittajan dashboard (MVP, front-only)</title>
+  <link rel="stylesheet" href="app.css"/>
+</head>
+<body>
+  <header>
+    <h1>Salkku</h1>
+
+    <div class="upload-group">
+      <h2>Perustiedot</h2>
+      <div class="upload-item">
+        <label for="secFile">Securities</label>
+        <input type="file" id="secFile" accept=".csv"/>
+      </div>
+      <div class="upload-item">
+        <label for="priceFile">Prices</label>
+        <input type="file" id="priceFile" accept=".csv"/>
+      </div>
+    </div>
+
+    <div class="upload-group">
+      <h2>Holdings</h2>
+      <div class="upload-item">
+        <label for="holdMinFile">Holdings_min</label>
+        <input type="file" id="holdMinFile" accept=".csv"/>
+      </div>
+    </div>
+
+    <div class="upload-group">
+      <h2>Allocations</h2>
+      <div class="upload-item">
+        <label for="countryFile">Country_alloc</label>
+        <input type="file" id="countryFile" accept=".csv"/>
+      </div>
+      <div class="upload-item">
+        <label for="sectorFile">Sector_alloc</label>
+        <input type="file" id="sectorFile" accept=".csv"/>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="loadFiles">Lataa valitut tiedostot</button>
+      <button id="loadSamples">Lataa samplet</button>
+    </div>
+  </header>
+
+  <section id="summary">
+    <div><strong>Kokonaisarvo:</strong> <span id="totalValue">€0</span></div>
+  </section>
+
+  <section id="tableWrap">
+    <table id="tbl"><thead id="thead"></thead><tbody id="tbody"></tbody></table>
+  </section>
+
+  <section id="charts">
+    <div class="chart">
+      <h3>Maa-jakauma (look-through)</h3>
+      <canvas id="byCountry"></canvas>
+    </div>
+    <div class="chart">
+      <h3>Sektorijakauma (look-through)</h3>
+      <canvas id="bySector"></canvas>
+    </div>
+  </section>
+
+  <section id="csvHelp">
+    <h2>CSV-ohjeet</h2>
+    <p>Voit ladata omia CSV-tiedostoja seuraavissa muodoissa:</p>
+    <pre><code>securities.csv
+ticker,type,country,sector
+AAPL,Stock,USA,Technology
+MSFT,Stock,USA,Technology
+ETF1,ETF,USA,
+</code></pre>
+
+    <pre><code>prices.csv
+ticker,date,price
+AAPL,2025-09-01,210
+MSFT,2025-09-01,420
+ETF1,2025-09-01,100
+</code></pre>
+
+    <pre><code>holdings_min.csv
+ticker,quantity
+AAPL,10
+MSFT,5
+ETF1,20
+</code></pre>
+
+    <pre><code>country_allocations.csv
+ticker,country,weight
+ETF1,USA,60
+ETF1,Finland,25
+ETF1,Germany,15
+</code></pre>
+
+    <pre><code>sector_allocations.csv
+ticker,sector,weight
+ETF1,Technology,50
+ETF1,Health Care,20
+ETF1,Industrials,30
+</code></pre>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
